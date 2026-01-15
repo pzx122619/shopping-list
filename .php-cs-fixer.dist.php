@@ -13,7 +13,7 @@ $finder = PhpCsFixer\Finder::create()
     ]);
 
 return (new Config())
-    ->setParallelConfig(ParallelConfigFactory::detect()) // @TODO 4.0 no need to call this manually
+    ->setParallelConfig(ParallelConfigFactory::detect())
     ->setRiskyAllowed(false)
     ->setRules([
         '@PSR12' => true,
