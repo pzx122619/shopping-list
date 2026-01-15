@@ -6,9 +6,9 @@ WORKDIR /app
 COPY .. .
 
 COPY .env.example .env
-COPY 10-cors.conf /opt/docker/etc/nginx/vhost.common.d/10-cors.conf
-COPY crontab /etc/crontabs/root
-COPY php.ini /etc/php/8.4/cli/conf.d/99-sail.ini
+COPY docker/10-cors.conf /opt/docker/etc/nginx/vhost.common.d/10-cors.conf
+COPY docker/crontab /etc/crontabs/root
+COPY docker/php.ini /etc/php/8.4/cli/conf.d/99-sail.ini
 
 RUN apt-get update --allow-unauthenticated --allow-insecure-repositories
 RUN apt-get install -y sudo

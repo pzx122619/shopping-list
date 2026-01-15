@@ -1,7 +1,6 @@
-version: '3.7'
 services:
     laravel.test:
-        container_name: auth-laravel
+        container_name: shopping-list-laravel
         build:
             context: .
             dockerfile: Dockerfile
@@ -9,7 +8,6 @@ services:
             - 'host.docker.internal:host-gateway'
         ports:
             - '${FORWARD_APP_PORT:-8000}:80'
-            - '${FORWARD_VITE_PORT:-5173}:5173'
         environment:
             WWWUSER: '1000'
             LARAVEL_SAIL: 1
@@ -19,11 +17,11 @@ services:
         volumes:
             - '.:/app'
         networks:
-            - auth
+            - shopping-list
         depends_on:
             - mysql
     mysql:
-        container_name: auth-mysql
+        container_name: shopping-list-mysql
         image: 'mysql/mysql-server:8.0'
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
@@ -33,15 +31,15 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'auth-mysql:/var/lib/mysql'
+            - 'shopping-list-mysql:/var/lib/mysql'
         networks:
-            - auth
+            - shopping-list
         healthcheck:
             test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
             retries: 3
             timeout: 5s
     phpmyadmin:
-        container_name: auth-phpmyadmin
+        container_name: shopping-list-phpmyadmin
         image: phpmyadmin/phpmyadmin
         links:
             - mysql:mysql
@@ -52,10 +50,10 @@ services:
             MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
             PMA_HOST: mysql
         networks:
-            - auth
+            - shopping-list
 networks:
-    auth:
+    shopping-list:
         driver: bridge
 volumes:
-    auth-mysql:
+    shopping-list-mysql:
         driver: local
